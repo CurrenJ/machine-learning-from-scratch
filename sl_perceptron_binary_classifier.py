@@ -3,7 +3,7 @@
 
 import math
 import random
-from perceptron import Perceptron, Node, InputNode, OutputNode
+from perceptron import SingleLayerPerceptron
 
 
 @staticmethod
@@ -21,23 +21,14 @@ def classification_func(x):
 
 
 def main():
-    perceptron = Perceptron()
-
-    input_0 = InputNode(perceptron, [1])  # bias input
-    input_1 = InputNode(perceptron, [0])
-    input_2 = InputNode(perceptron, [0])
-
-    output_0 = OutputNode(perceptron)
-    output_0.add_input(input_0)
-    output_0.add_input(input_1)
-    output_0.add_input(input_2)
+    perceptron = SingleLayerPerceptron(3, 1, "sigmoid")
 
     training_data = generate_training_data(10000, classification_func)
     test_data = generate_training_data(10000, classification_func)
 
-    print(f"Accuracy (before training): {perceptron.accuracy(test_data)}")
-    perceptron.train(training_data, 20, 0.1, 5)
-    print(f"Accuracy (after {20} epochs): {perceptron.accuracy(test_data)}")
+    print(f"Accuracy (before training): {perceptron.classification_accuracy(test_data)}")
+    perceptron.train(training_data, 20, 0.1, 5, "accuracy")
+    print(f"Accuracy (after {20} epochs): {perceptron.classification_accuracy(test_data)}")
 
 
 if __name__ == '__main__':
